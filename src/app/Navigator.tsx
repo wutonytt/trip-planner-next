@@ -35,16 +35,16 @@ export default function Navigator() {
   const [openModal, setOpenModal] = useState<string | undefined>();
 
   return (
-    <Navbar fluid>
+    <Navbar fluid className="dark:bg-black">
       <Navbar.Brand href="/">
-        <Image
+        {/* <Image
           alt="Flowbite React Logo"
           className="mr-3 h-6 sm:h-9"
           src="/favicon.svg"
           width={32}
           height={32}
-        />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+        /> */}
+        <span className="self-center whitespace-nowrap text-xl font-semibold text-sky-500 dark:text-sky-400">
           Triplanner
         </span>
       </Navbar.Brand>
