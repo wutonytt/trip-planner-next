@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Button, DarkThemeToggle, Navbar, useThemeMode } from "flowbite-react";
 import AccountModal from "./account/AccountModal";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Navigator() {
   const pathname = usePathname();
@@ -36,10 +37,12 @@ export default function Navigator() {
   return (
     <Navbar fluid>
       <Navbar.Brand href="/">
-        <img
+        <Image
           alt="Flowbite React Logo"
           className="mr-3 h-6 sm:h-9"
           src="/favicon.svg"
+          width={32}
+          height={32}
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           Triplanner
