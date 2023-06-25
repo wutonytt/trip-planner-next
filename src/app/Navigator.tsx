@@ -44,7 +44,7 @@ export default function Navigator() {
           width={32}
           height={32}
         /> */}
-        <span className="self-center whitespace-nowrap text-xl font-semibold text-sky-500 dark:text-sky-400">
+        <span className="self-center whitespace-nowrap text-xl font-semibold text-sky-600 dark:text-sky-400">
           Triplanner
         </span>
       </Navbar.Brand>
