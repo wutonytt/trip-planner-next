@@ -1,26 +1,31 @@
+"use client";
+
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { Dispatch, SetStateAction } from "react";
+import { signIn } from "next-auth/react";
 
-interface LoginFormProps {
-  setModalBody: Dispatch<SetStateAction<string>>;
-}
+export default function LoginForm() {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const username = (
+      event.currentTarget.elements.namedItem("username") as HTMLInputElement
+    ).value;
+    const password = (
+      event.currentTarget.elements.namedItem("password") as HTMLInputElement
+    ).value;
 
-export default function LoginForm({ setModalBody }: LoginFormProps) {
+    signIn("credentials", { username, password });
+  };
+
   return (
-    <form className="space-y-6">
+    <form className="space-y-6" onSubmit={handleSubmit}>
       <h3 className="text-xl font-medium text-gray-900 dark:text-white">
         Log in
       </h3>
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email" value="Your email" />
+          <Label htmlFor="username" value="Your username" />
         </div>
-        <TextInput
-          id="email"
-          type="email"
-          placeholder="name@company.com"
-          required
-        />
+        <TextInput id="username" type="text" required />
       </div>
       <div>
         <div className="mb-2 block">
@@ -34,7 +39,7 @@ export default function LoginForm({ setModalBody }: LoginFormProps) {
           <Label htmlFor="remember">Remember me</Label>
         </div>
         <a
-          onClick={() => setModalBody("forgot-password")}
+          href="/password-reset"
           className="cursor-pointer text-sm font-medium text-cyan-700 hover:underline dark:text-cyan-500"
         >
           Forgot password?
@@ -46,7 +51,7 @@ export default function LoginForm({ setModalBody }: LoginFormProps) {
       <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered?&nbsp;
         <a
-          onClick={() => setModalBody("signup")}
+          href="/signup"
           className="cursor-pointer text-cyan-700 hover:underline dark:text-cyan-500"
         >
           Create an account
