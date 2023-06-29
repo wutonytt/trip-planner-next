@@ -1,11 +1,11 @@
 "use client";
 
 import { Flowbite } from "flowbite-react";
-import Navigator from "../../Navigator";
+import { isClient } from "@/app/isClient";
 import ItineraryBreadcrumb from "./ItineraryBreadcrumb";
+import Navigator from "@/components/Navigator";
 import Map from "./Map";
 import Itinerary from "./Itinerary";
-import { isClient } from "@/app/isClient";
 // import { usePathname } from "next/navigation";
 
 export default function ItineraryPage() {

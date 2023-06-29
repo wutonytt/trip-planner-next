@@ -2,9 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { Button, DarkThemeToggle, Navbar, useThemeMode } from "flowbite-react";
-import AccountModal from "./account/AccountModal";
-import { useState } from "react";
-import Image from "next/image";
 
 export default function Navigator() {
   const pathname = usePathname();
@@ -30,9 +27,11 @@ export default function Navigator() {
       name: "Contact",
       href: "/contact",
     },
+    {
+      name: "Dashboard",
+      href: "/dashboard"
+    }
   ];
-
-  const [openModal, setOpenModal] = useState<string | undefined>();
 
   return (
     <Navbar fluid className="dark:bg-black">
@@ -49,11 +48,7 @@ export default function Navigator() {
         </span>
       </Navbar.Brand>
       <div className="flex space-x-4 md:order-2">
-        <Button onClick={() => setOpenModal("form-elements")}>
-          Get Started
-        </Button>
-        <AccountModal openModal={openModal} setOpenModal={setOpenModal} />
-        {/* <Navbar.Toggle /> */}
+        <Button href="/login">Get Started</Button>
         <DarkThemeToggle
           onClick={() => {
             toggleMode();
