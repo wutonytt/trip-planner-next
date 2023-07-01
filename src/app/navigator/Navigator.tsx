@@ -2,6 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { Button, DarkThemeToggle, Navbar, useThemeMode } from "flowbite-react";
+import AvatarDropdown from "./AvatarDropdown";
+import { useSession } from "next-auth/react";
 
 export default function Navigator() {
   const pathname = usePathname();
@@ -27,28 +29,18 @@ export default function Navigator() {
       name: "Contact",
       href: "/contact",
     },
-    {
-      name: "Dashboard",
-      href: "/dashboard"
-    }
   ];
+
+  const { data: session, status } = useSession();
 
   return (
     <Navbar fluid className="dark:bg-black">
       <Navbar.Brand href="/">
-        {/* <Image
-          alt="Flowbite React Logo"
-          className="mr-3 h-6 sm:h-9"
-          src="/favicon.svg"
-          width={32}
-          height={32}
-        /> */}
         <span className="self-center whitespace-nowrap text-xl font-semibold text-sky-600 dark:text-sky-400">
           Triplanner
         </span>
       </Navbar.Brand>
       <div className="flex space-x-4 md:order-2">
-        <Button href="/login">Get Started</Button>
         <DarkThemeToggle
           onClick={() => {
             toggleMode();
@@ -56,6 +48,12 @@ export default function Navigator() {
             localStorage.setItem("theme", newMode);
           }}
         />
+        {status === "unauthenticated" || status === "loading" ? (
+          <Button href="/login">Get Started</Button>
+        ) : (
+          <AvatarDropdown user={session.user} />
+        )}
+        <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
         {navlinks.map((link, index) => {

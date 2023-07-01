@@ -1,31 +1,45 @@
 "use client";
 
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { HiInformationCircle } from "react-icons/hi";
 
 export default function LoginForm() {
+  const searchParams = useSearchParams();
+  const hasError = searchParams.has("error");
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const username = (
-      event.currentTarget.elements.namedItem("username") as HTMLInputElement
+    const email = (
+      event.currentTarget.elements.namedItem("email") as HTMLInputElement
     ).value;
     const password = (
       event.currentTarget.elements.namedItem("password") as HTMLInputElement
     ).value;
 
-    signIn("credentials", { username, password });
+    signIn("credentials", { email, password, callbackUrl: "/trip" });
   };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+      <h3 className="text-center text-xl font-medium text-gray-900 dark:text-white">
         Log in
       </h3>
+      {hasError && (
+        <div className="w-full">
+          <Alert color="failure" icon={HiInformationCircle}>
+            <span>
+              <p>Incorrect email or password</p>
+            </span>
+          </Alert>
+        </div>
+      )}
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="username" value="Your username" />
+          <Label htmlFor="email" value="Your email" />
         </div>
-        <TextInput id="username" type="text" required />
+        <TextInput id="email" type="email" required />
       </div>
       <div>
         <div className="mb-2 block">
@@ -48,6 +62,7 @@ export default function LoginForm() {
       <div className="w-full">
         <Button type="submit">Log in</Button>
       </div>
+
       <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered?&nbsp;
         <a

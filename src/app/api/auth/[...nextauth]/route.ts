@@ -13,7 +13,7 @@ const handler = NextAuth({
       id: "credentials",
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -22,7 +22,7 @@ const handler = NextAuth({
 
         try {
           const user = await User.findOne({
-            username: credentials.username,
+            email: credentials.email,
           });
 
           if (user) {

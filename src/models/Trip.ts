@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const tripSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       unique: true,
       required: true,
@@ -15,6 +15,10 @@ const tripSchema = new Schema(
     image: {
       type: String,
     },
+    // userId: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
   },
   { timestamps: true }
 );

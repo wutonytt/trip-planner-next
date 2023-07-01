@@ -5,7 +5,7 @@ import User from "@/models/User";
 
 export async function POST(request: Request) {
   // Get user data from the request body
-  const { username, email, password, passwordConfirm } = await request.json();
+  const { name, email, password, passwordConfirm } = await request.json();
 
   await connect();
 
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   }
 
   const newUser = new User({
-    username: username,
+    name: name,
     email: email,
     password: hashedPassword,
   });
@@ -25,6 +25,8 @@ export async function POST(request: Request) {
     await newUser.save();
     return new NextResponse("Account has been created", { status: 201 });
   } catch (error: any) {
-    return new NextResponse(error.message, { status: 500 });
+    return new NextResponse("Email has already been used", {
+      status: 500,
+    });
   }
 }
