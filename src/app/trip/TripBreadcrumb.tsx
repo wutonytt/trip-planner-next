@@ -3,7 +3,7 @@
 import { Breadcrumb } from "flowbite-react";
 import { FaHouse } from "react-icons/fa6";
 
-export default function TripBreadcrumb({ trip_name }: any) {
+export default function TripBreadcrumb() {
   return (
     <Breadcrumb aria-label="Default breadcrumb example">
       <Breadcrumb.Item href="/" icon={FaHouse}>

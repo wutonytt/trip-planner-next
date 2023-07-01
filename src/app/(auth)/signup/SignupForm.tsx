@@ -1,3 +1,5 @@
+"use client";
+
 import { Alert, Button, Label, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -43,7 +45,7 @@ export default function SignupForm() {
       });
 
       res.status === 201 &&
-        router.push("/login?success=Account has been created");
+        router.push("/login?success=Success: Account has been created");
       res.status !== 201 &&
         setError({
           isError: true,

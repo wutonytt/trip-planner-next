@@ -1,7 +1,3 @@
-"use client";
-
-import { Flowbite } from "flowbite-react";
-import { isClient } from "@/utils/isClient";
 import ItineraryBreadcrumb from "./ItineraryBreadcrumb";
 import Navigator from "@/app/navigator/Navigator";
 import Map from "./Map";
@@ -10,8 +6,6 @@ import Itinerary from "./Itinerary";
 
 export default function ItineraryPage() {
   // const pathname = usePathname();
-  let dark = isClient() && localStorage.getItem("theme") === "dark";
-
   // itinerary data should be fetch via API by trip-key (pathname or dedicated uuid)
   const itinerary = {
     trip_name: "Visiting my aunt in LA",
@@ -77,7 +71,7 @@ export default function ItineraryPage() {
   };
 
   return (
-    <Flowbite theme={{ dark }}>
+    <div>
       <Navigator />
       <div className="px-5 pt-5">
         <ItineraryBreadcrumb trip_name={itinerary.trip_name} />
@@ -86,6 +80,6 @@ export default function ItineraryPage() {
         <Itinerary plans={itinerary.plans} />
         <Map />
       </div>
-    </Flowbite>
+    </div>
   );
 }
