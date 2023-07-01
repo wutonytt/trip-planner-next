@@ -1,3 +1,5 @@
+"use client";
+
 import { Alert, Button, FileInput, Label, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

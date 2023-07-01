@@ -8,6 +8,7 @@ import { HiInformationCircle } from "react-icons/hi";
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const hasError = searchParams.has("error");
+  const hasSuccess = searchParams.has("success");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,7 +31,16 @@ export default function LoginForm() {
         <div className="w-full">
           <Alert color="failure" icon={HiInformationCircle}>
             <span>
-              <p>Incorrect email or password</p>
+              <p>{searchParams.get("error").split(":")[1].trimStart()}</p>
+            </span>
+          </Alert>
+        </div>
+      )}
+      {hasSuccess && (
+        <div className="w-full">
+          <Alert color="success" icon={HiInformationCircle}>
+            <span>
+              <p>{searchParams.get("success").split(":")[1].trimStart()}</p>
             </span>
           </Alert>
         </div>

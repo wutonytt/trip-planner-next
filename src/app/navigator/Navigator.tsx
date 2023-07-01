@@ -1,13 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Button, DarkThemeToggle, Navbar, useThemeMode } from "flowbite-react";
+import { Button, DarkThemeToggle, Navbar } from "flowbite-react";
 import AvatarDropdown from "./AvatarDropdown";
 import { useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 
 export default function Navigator() {
   const pathname = usePathname();
-  const [mode, , toggleMode] = useThemeMode();
   const navlinks = [
     {
       name: "Home",
@@ -33,6 +33,8 @@ export default function Navigator() {
 
   const { data: session, status } = useSession();
 
+  const { theme, setTheme } = useTheme();
+
   return (
     <Navbar fluid className="dark:bg-black">
       <Navbar.Brand href="/">
@@ -42,11 +44,9 @@ export default function Navigator() {
       </Navbar.Brand>
       <div className="flex space-x-4 md:order-2">
         <DarkThemeToggle
-          onClick={() => {
-            toggleMode();
-            let newMode = mode === "dark" ? "light" : "dark";
-            localStorage.setItem("theme", newMode);
-          }}
+          onClick={() =>
+            theme === "light" ? setTheme("dark") : setTheme("light")
+          }
         />
         {status === "unauthenticated" || status === "loading" ? (
           <Button href="/login">Get Started</Button>

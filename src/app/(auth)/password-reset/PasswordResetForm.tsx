@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Label, TextInput } from "flowbite-react";
 
 export default function PasswordResetForm() {
