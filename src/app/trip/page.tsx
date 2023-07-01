@@ -1,10 +1,10 @@
 "use client";
 
 import { Flowbite } from "flowbite-react";
-import Navigator from "../../components/Navigator";
+import Navigator from "../navigator/Navigator";
 import TripList from "./TripList";
 import TripBreadcrumb from "./TripBreadcrumb";
-import { isClient } from "../isClient";
+import { isClient } from "../../utils/isClient";
 
 export default function TripPage() {
   let dark = isClient() && localStorage.getItem("theme") === "dark";

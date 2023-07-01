@@ -1,9 +1,8 @@
 "use client";
 
 import { Flowbite } from "flowbite-react";
-import { isClient } from "./isClient";
-import Navigator from "@/components/Navigator";
-
+import { isClient } from "../utils/isClient";
+import Navigator from "@/app/navigator/Navigator";
 export default function Home() {
   let dark = isClient() && localStorage.getItem("theme") === "dark";
 

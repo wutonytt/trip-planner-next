@@ -10,6 +10,7 @@ async function getTripData(setIsTripError) {
   try {
     const res = await fetch(`${baseUrl}/api/trip`, {
       method: "GET",
+      next: { revalidate: 10 },
     });
     if (res.status === 200) {
       return res.json();
@@ -64,21 +65,21 @@ export default async function TripList() {
     <div className="grid grid-flow-row auto-rows-fr grid-cols-2 gap-4 p-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
       {trips.map(
         (
-          trip: { image: string; name: string; desc: string },
+          trip: { image: string; title: string; desc: string },
           index: Key | null | undefined
         ) => {
           return (
             <TripCard
               key={index}
               image={trip.image}
-              trip_name={trip.name}
-              trip_description={trip.desc}
+              title={trip.title}
+              desc={trip.desc}
             />
           );
         }
       )}
       {isTripError && "Something went wrong"}
-      <Card className="row-span-1 items-center" href="/trip/">
+      <Card className="row-span-1 items-center" href="/trip/new">
         <p className="text-xl font-semibold text-gray-500 dark:text-gray-400">
           + Add a new trip
         </p>

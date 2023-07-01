@@ -1,8 +1,8 @@
 "use client";
 
 import { Flowbite } from "flowbite-react";
-import { isClient } from "../../isClient";
-import Navigator from "@/components/Navigator";
+import { isClient } from "../../../utils/isClient";
+import Navigator from "@/app/navigator/Navigator";
 import SignupForm from "./SignupForm";
 
 export default function TripPage() {

@@ -1,8 +1,8 @@
 "use client";
 
 import { Flowbite } from "flowbite-react";
-import Navigator from "../../../components/Navigator";
-import { isClient } from "../../isClient";
+import Navigator from "../../navigator/Navigator";
+import { isClient } from "../../../utils/isClient";
 import PasswordResetForm from "./PasswordResetForm";
 
 export default function TripPage() {
