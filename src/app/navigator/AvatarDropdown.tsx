@@ -7,17 +7,12 @@ interface AvatarDropdownProps {
   user: DefaultSession["user"];
 }
 
-function getInitials(name: string) {
-  const [first, last] = name.split(" ");
-  return `${first.charAt(0)}${last.charAt(0)}`;
-}
-
 export default function AvatarDropdown({ user }: AvatarDropdownProps) {
   return (
     <Dropdown
       arrowIcon={false}
       inline
-      label={<Avatar placeholderInitials={getInitials(user.name)} rounded />}
+      label={<Avatar placeholderInitials={user.name.charAt(0)} rounded />}
     >
       <Dropdown.Header>
         <span className="block text-sm">{user.name}</span>

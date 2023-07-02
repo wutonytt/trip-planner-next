@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ListGroup } from "flowbite-react";
+import { Avatar, Button, Dropdown, ListGroup } from "flowbite-react";
 import DailyItinerary from "./DailyItinerary";
 
 interface ItineraryProps {
@@ -23,9 +23,21 @@ export default function Itinerary({ plans }: ItineraryProps) {
               <div className="w-full flex-row px-5 py-2 text-left">
                 <div className="flow-root ">
                   <p className="float-left text-xl font-bold">{plan.date}</p>
-                  <Button size="xs" color="gray" className="float-right">
+                  {/* <Button size="xs" color="gray" className="float-right">
                     Edit
-                  </Button>
+                  </Button> */}
+                  <div className="float-right">
+                    <Dropdown arrowIcon={false} inline label="...">
+                      <Dropdown.Item>
+                        <a href="/trip/{now}/edit">Edit</a>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <a href="/trip/{now}/delete" className="text-red-500">
+                          Delete
+                        </a>
+                      </Dropdown.Item>
+                    </Dropdown>
+                  </div>
                 </div>
                 <DailyItinerary details={plan.details} />
               </div>

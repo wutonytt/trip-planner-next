@@ -1,17 +1,20 @@
 "use client";
 
-import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { HiInformationCircle } from "react-icons/hi";
+import InfoAlert from "./InfoAlert";
+import { Suspense, useState } from "react";
+
+function InfoAlertFallback() {
+  return <></>;
+}
 
 export default function LoginForm() {
-  const searchParams = useSearchParams();
-  const hasError = searchParams.has("error");
-  const hasSuccess = searchParams.has("success");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const email = (
       event.currentTarget.elements.namedItem("email") as HTMLInputElement
     ).value;
@@ -19,43 +22,29 @@ export default function LoginForm() {
       event.currentTarget.elements.namedItem("password") as HTMLInputElement
     ).value;
 
-    signIn("credentials", { email, password, callbackUrl: "/trip" });
+    await signIn("credentials", { email, password, callbackUrl: "/trip" });
+    setLoading(false);
   };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h3 className="text-center text-xl font-medium text-gray-900 dark:text-white">
-        Log in
+      <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+        Log in to your account
       </h3>
-      {hasError && (
-        <div className="w-full">
-          <Alert color="failure" icon={HiInformationCircle}>
-            <span>
-              <p>{searchParams.get("error").split(":")[1].trimStart()}</p>
-            </span>
-          </Alert>
-        </div>
-      )}
-      {hasSuccess && (
-        <div className="w-full">
-          <Alert color="success" icon={HiInformationCircle}>
-            <span>
-              <p>{searchParams.get("success").split(":")[1].trimStart()}</p>
-            </span>
-          </Alert>
-        </div>
-      )}
+      <Suspense fallback={<InfoAlertFallback />}>
+        <InfoAlert />
+      </Suspense>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="email" value="Your email" />
         </div>
-        <TextInput id="email" type="email" required />
+        <TextInput disabled={loading} id="email" type="email" required />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="password" value="Your password" />
         </div>
-        <TextInput id="password" type="password" required />
+        <TextInput disabled={loading} id="password" type="password" required />
       </div>
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
@@ -63,14 +52,21 @@ export default function LoginForm() {
           <Label htmlFor="remember">Remember me</Label>
         </div>
         <a
-          href="/password-reset"
+          href="/account-recovery"
           className="cursor-pointer text-sm font-medium text-cyan-700 hover:underline dark:text-cyan-500"
         >
           Forgot password?
         </a>
       </div>
-      <div className="w-full">
-        <Button type="submit">Log in</Button>
+      <div>
+        <Button
+          disabled={loading}
+          isProcessing={loading}
+          className="w-full"
+          type="submit"
+        >
+          Log in
+        </Button>
       </div>
 
       <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">

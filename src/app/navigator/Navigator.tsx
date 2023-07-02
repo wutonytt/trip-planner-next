@@ -32,7 +32,6 @@ export default function Navigator() {
   ];
 
   const { data: session, status } = useSession();
-
   const { theme, setTheme } = useTheme();
 
   return (
