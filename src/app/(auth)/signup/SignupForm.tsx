@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiInformationCircle } from "react-icons/hi";
@@ -10,11 +10,13 @@ export default function SignupForm() {
     isError: false,
     errorMessage: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const name = (
       event.currentTarget.elements.namedItem("name") as HTMLInputElement
     ).value;
@@ -51,15 +53,17 @@ export default function SignupForm() {
           isError: true,
           errorMessage: (await res.text()).toString(),
         });
+      setLoading(false);
     } catch (error) {
       setError({ isError: true, errorMessage: "Something went wrong" });
+      setLoading(false);
     }
   };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h3 className="text-center text-xl font-medium text-gray-900 dark:text-white">
-        Sign up
+      <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+        Create an account
       </h3>
       {isError && (
         <div className="w-full">
@@ -74,13 +78,20 @@ export default function SignupForm() {
         <div className="mb-2 block">
           <Label htmlFor="name" value="Your name" />
         </div>
-        <TextInput id="name" type="text" required />
+        <TextInput
+          disabled={loading}
+          id="name"
+          type="text"
+          placeholder="e.g. Tony Wu"
+          required
+        />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="email" value="Your email" />
         </div>
         <TextInput
+          disabled={loading}
           id="email"
           type="email"
           placeholder="name@company.com"
@@ -91,16 +102,40 @@ export default function SignupForm() {
         <div className="mb-2 block">
           <Label htmlFor="password" value="Your password" />
         </div>
-        <TextInput id="password" type="password" required />
+        <TextInput disabled={loading} id="password" type="password" required />
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="password-confirm" value="Confirm your password" />
         </div>
-        <TextInput id="password-confirm" type="password" required />
+        <TextInput
+          disabled={loading}
+          id="password-confirm"
+          type="password"
+          required
+        />
       </div>
-      <div className="w-full">
-        <Button type="submit">Sign up</Button>
+      <div className="flex items-center gap-2">
+        <Checkbox id="t&c" />
+        <Label htmlFor="t&c">
+          I accept the{" "}
+          <a
+            className="cursor-pointer text-cyan-700 hover:underline dark:text-cyan-500"
+            href="#"
+          >
+            Terms and Conditions
+          </a>
+        </Label>
+      </div>
+      <div>
+        <Button
+          disabled={loading}
+          isProcessing={loading}
+          className="w-full"
+          type="submit"
+        >
+          Sign up
+        </Button>
       </div>
       <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
         Already have an account?&nbsp;
