@@ -1,5 +1,4 @@
 import ItineraryBreadcrumb from "./ItineraryBreadcrumb";
-import Navigator from "@/app/navigator/Navigator";
 import Map from "./Map";
 import Itinerary from "./Itinerary";
 // import { usePathname } from "next/navigation";
@@ -72,7 +71,6 @@ export default function ItineraryPage() {
 
   return (
     <div>
-      <Navigator />
       <div className="px-5 pt-5">
         <ItineraryBreadcrumb trip_name={itinerary.trip_name} />
       </div>

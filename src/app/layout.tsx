@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { Providers } from "./provider";
+import Navigator from "./navigator/Navigator";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <head />
       <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
+          <Navigator />
           {children}
           <Analytics />
         </Providers>
