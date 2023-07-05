@@ -15,10 +15,10 @@ const tripSchema = new Schema(
     image: {
       type: String,
     },
-    // userId: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "User",
-    // },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

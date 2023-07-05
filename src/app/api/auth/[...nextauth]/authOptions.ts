@@ -1,4 +1,3 @@
-
 import type { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -54,6 +53,17 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+  },
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     error: "/login",
   },

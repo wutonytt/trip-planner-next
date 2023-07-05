@@ -1,10 +1,7 @@
-import ItineraryBreadcrumb from "./ItineraryBreadcrumb";
 import Map from "./Map";
 import Itinerary from "./Itinerary";
-// import { usePathname } from "next/navigation";
 
-export default function ItineraryPage() {
-  // const pathname = usePathname();
+export default function ItineraryPage({ params }) {
   // itinerary data should be fetch via API by trip-key (pathname or dedicated uuid)
   const itinerary = {
     trip_name: "Visiting my aunt in LA",
@@ -68,14 +65,10 @@ export default function ItineraryPage() {
       },
     ],
   };
-
   return (
     <div>
-      <div className="px-5 pt-5">
-        <ItineraryBreadcrumb trip_name={itinerary.trip_name} />
-      </div>
-      <div className="flex h-[calc(100vh-110px)]">
-        <Itinerary plans={itinerary.plans} />
+      <div className="flex h-[calc(100vh-60px)]">
+        <Itinerary id={params.id} plans={itinerary.plans} />
         <Map />
       </div>
     </div>
