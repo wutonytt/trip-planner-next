@@ -6,7 +6,7 @@ import { getToken } from "next-auth/jwt";
 // Get trip list from mongodb
 export async function GET(req: NextRequest) {
   const token = await getToken({ req });
-  const userId = token.sub;
+  const userId = token?.sub;
   try {
     await connect();
     const tripData: any = await Trip.find({ userId: userId });
