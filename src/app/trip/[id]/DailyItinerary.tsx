@@ -20,7 +20,7 @@ export default function DailyItinerary({ details }: DailyItineraryProps) {
       <Timeline>
         {details.map((detail, index) => {
           return (
-            <Timeline.Item key={index}>
+            <Timeline.Item className="mb-5" key={index}>
               <Timeline.Point
                 icon={
                   typeIconMapper[detail.type as keyof typeof typeIconMapper]
@@ -28,8 +28,10 @@ export default function DailyItinerary({ details }: DailyItineraryProps) {
               />
               <Timeline.Content>
                 <Timeline.Time>{detail.time}</Timeline.Time>
-                <Timeline.Title>{detail.title}</Timeline.Title>
-                <Timeline.Body>{detail.body}</Timeline.Body>
+                <Timeline.Title className="text-base font-normal">
+                  {detail.title}
+                </Timeline.Title>
+                <Timeline.Body className="text-sm">{detail.body}</Timeline.Body>
               </Timeline.Content>
             </Timeline.Item>
           );

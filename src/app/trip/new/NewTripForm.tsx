@@ -1,12 +1,14 @@
 "use client";
 
 import { Alert, Button, FileInput, Label, TextInput } from "flowbite-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiInformationCircle } from "react-icons/hi";
 
 export default function NewTripForm() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const { data: session } = useSession();
   const [{ isError, errorMessage }, setError] = useState({
     isError: false,
     errorMessage: "",
@@ -36,17 +38,29 @@ export default function NewTripForm() {
           title: title,
           desc: desc,
           image: image,
+          userId: session.user.id,
         }),
       });
 
-      res.status === 201 && router.push("/trip?success=Trip has been created");
+      if (res.status === 201) {
+        res
+          .json()
+          .then((res) =>
+            router.push(`/trip/${res.id}?success=Trip has been created`)
+          );
+      }
+
       res.status !== 201 &&
         setError({
           isError: true,
-          errorMessage: (await res.text()).toString(),
+          errorMessage: `Trip title "${title}" has already been used. Please try another title.`,
         });
     } catch (error) {
-      setError({ isError: true, errorMessage: "Something went wrong" });
+      setError({
+        isError: true,
+        errorMessage:
+          "Something went wrong. Please try again later or contact us.",
+      });
     }
   };
   return (
@@ -75,7 +89,13 @@ export default function NewTripForm() {
         </div>
         <TextInput id="desc" type="text" />
       </div>
-      <div className="max-w-md" id="fileUpload">
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="image" value="Image URL (optional)" />
+        </div>
+        <TextInput id="image" type="text" />
+      </div>
+      {/* <div className="max-w-md" id="fileUpload">
         <div className="mb-2 block">
           <Label htmlFor="image" value="Upload image (optional)" />
         </div>
@@ -84,9 +104,11 @@ export default function NewTripForm() {
           id="image"
           accept="image/*"
         />
-      </div>
-      <div className="w-full">
-        <Button type="submit">Start plan your trip</Button>
+      </div> */}
+      <div>
+        <Button className="w-full" type="submit">
+          Start plan your trip
+        </Button>
       </div>
     </form>
   );
