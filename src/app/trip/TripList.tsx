@@ -5,6 +5,7 @@ import TripCard from "./TripCard";
 import { Key, use } from "react";
 import { ObjectId } from "mongodb";
 import queryClient from "@/utils/queryClient";
+import { useSession } from "next-auth/react";
 
 type Trips = {
   image: string;
@@ -13,6 +14,7 @@ type Trips = {
 }[];
 
 export default function TripList() {
+  const { data: session } = useSession();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const trips = use(
