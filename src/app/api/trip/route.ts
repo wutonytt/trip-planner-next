@@ -1,13 +1,15 @@
 import Trip from "@/models/Trip";
 import connect from "@/utils/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 // Get trip list from mongodb
-export async function GET(request: Request) {
-  // const userId = await request._id;
+export async function GET(req: NextRequest) {
+  const token = await getToken({ req });
+  const userId = token.sub;
   try {
     await connect();
-    const tripData: any = await Trip.find();
+    const tripData: any = await Trip.find({ userId: userId });
     return new NextResponse(JSON.stringify(tripData), { status: 200 });
   } catch (error) {
     return new NextResponse("Database error", { status: 500 });
