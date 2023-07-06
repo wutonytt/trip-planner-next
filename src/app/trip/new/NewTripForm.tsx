@@ -1,10 +1,11 @@
 "use client";
 
-import { Alert, Button, FileInput, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Label, TextInput } from "flowbite-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiInformationCircle } from "react-icons/hi";
+import Datepicker from "react-tailwindcss-datepicker";
 
 export default function NewTripForm() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -14,6 +15,16 @@ export default function NewTripForm() {
     errorMessage: "",
   });
   const router = useRouter();
+  const [dateRange, setDateRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
+
+  const handleDateRangeChange = (newDateRange) => {
+    console.log("newDateRange:", newDateRange);
+    setDateRange(newDateRange);
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -63,6 +74,7 @@ export default function NewTripForm() {
       });
     }
   };
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h3 className="text-center text-xl font-medium text-gray-900 dark:text-white">
@@ -82,6 +94,20 @@ export default function NewTripForm() {
           <Label htmlFor="title" value="Trip title" />
         </div>
         <TextInput id="title" type="text" required />
+      </div>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="dateRange" value="Date" />
+        </div>
+        <Datepicker
+          separator={"–"}
+          primaryColor={"sky"}
+          value={dateRange}
+          onChange={handleDateRangeChange}
+          displayFormat={"YYYY/MM/DD"}
+          // containerClassName="bg-gray-50 dark:bg-gray-700 rounded-lg"
+          inputClassName="p-2.5 text-sm block w-full border inline-flex pr-10 rounded-lg bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+        />
       </div>
       <div>
         <div className="mb-2 block">

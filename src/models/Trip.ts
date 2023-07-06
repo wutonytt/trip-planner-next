@@ -12,6 +12,12 @@ const tripSchema = new Schema(
     desc: {
       type: String,
     },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
+    },
     image: {
       type: String,
     },
@@ -19,6 +25,33 @@ const tripSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    itinerary: [
+      {
+        date: {
+          type: Date,
+          required: true,
+        },
+        items: [
+          {
+            item_name: {
+              type: String,
+              required: true,
+            },
+            item_type: {
+              type: String,
+              required: true,
+            },
+            item_time: {
+              type: Date,
+              required: true,
+            },
+            item_desc: {
+              type: String,
+            },
+          },
+        ],
+      },
+    ],
   },
   { timestamps: true }
 );

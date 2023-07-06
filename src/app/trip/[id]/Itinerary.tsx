@@ -79,11 +79,11 @@ export default function Itinerary({ id, plans }: ItineraryProps) {
                   <div className="float-right">
                     <Dropdown arrowIcon={false} inline label="...">
                       <Dropdown.Item>
-                        <a href="/trip/{now}/edit">Edit</a>
+                        <a href={`/trip/${id}/edit`}>Edit</a>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <a href="/trip/{now}/delete" className="text-red-500">
-                          Delete
+                        <a href={`/trip/${id}/delete`} className="text-red-500">
+                          Delete all day
                         </a>
                       </Dropdown.Item>
                     </Dropdown>
